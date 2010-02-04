@@ -16,13 +16,13 @@ from quickui import coroutine, CoSax
 
 __all__ = ['HtmlElements']
 
-# TODO: utilities?
+# UNDONE: utilities?
 @contextlib.contextmanager
 def resource_reader(name):
     with open(os.path.join(os.path.dirname(__file__), name), 'rb') as resource_stream:
         yield resource_stream
 
-# TODO: utilities?
+# UNDONE: utilities?
 @coroutine
 def load_elements(element_set):
     while True:

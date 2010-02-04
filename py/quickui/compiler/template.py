@@ -22,7 +22,7 @@ class Template(object):
         ...    Foo='Hello'), Name='John Locke', No=815)
         'Hello, world! I am John Locke from flight 815.'
         """
-        # TODO: args that don't have matching values in the namespace
+        # UNDONE: args that don't have matching values in the namespace
         #   are left unexpanded. Is this desired behaviour?
         ns = {} if ns is None else dict(ns)
         ns.update(**kwargs)
