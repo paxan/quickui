@@ -27,9 +27,8 @@ def coroutine(func):
     ...       print('pong!')
 
     >>> ponger = pong()
-    >>> ponger.send('1')
-    >>> ponger.send('2')
-    >>> ponger.send('3')
+    >>> ponger.send('ba')
+    >>> ponger.send('da')
     >>> ponger.send('ping')
     pong!
     """
@@ -76,15 +75,15 @@ class CoSaxTests(unittest.TestCase):
             while True:
                 events.append((yield))
 
-        buf = sio.StringIO("<root a='1' b='2' c='3'><child1 /><child2>Oliver</child2>foo bar</root>")
+        buf = sio.StringIO("<doc style='funky'><kid1 /><kid2>O RLY?</kid2>YA RLY!</doc>")
         CoSax.parse(buf, f())
 
         self.assertEquals([
-            ('start', ('root', {'a': '1', 'b': '2', 'c': '3'})),
-            ('start', ('child1', {})),
-            ('end', 'child1'),
-            ('start', ('child2', {})),
-            ('text', 'Oliver'),
-            ('end', 'child2'),
-            ('text', 'foo bar'),
-            ('end', 'root')], events)
+            ('start', ('doc', {'style': 'funky'})),
+            ('start', ('kid1', {})),
+            ('end', 'kid1'),
+            ('start', ('kid2', {})),
+            ('text', 'O RLY?'),
+            ('end', 'kid2'),
+            ('text', 'YA RLY!'),
+            ('end', 'doc')], events)
