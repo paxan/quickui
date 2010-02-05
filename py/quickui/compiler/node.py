@@ -31,9 +31,15 @@ class Node:
         """
         return 'this.{0} = '.format(self.id) if self.id else ''
 
+    tab_string = '\t'
+
+    @classmethod
+    def tabs(cls, tab_count):
+        return cls.tab_string * tab_count
+
     def indent_line(self, s, tab_count):
         chunks = []
-        chunks.append('\t' * tab_count)
+        chunks.append(self.tabs(tab_count))
         chunks.append(s)
         chunks.append('\n')
         return ''.join(chunks) # UNDONE: see if 'yield' is more pythonic?

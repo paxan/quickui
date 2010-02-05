@@ -1,6 +1,12 @@
 from quickui import co
 from quickui import compiler
-from quickui.compiler import template, htmlelements, node, htmlnode
+from quickui.compiler import (
+    template,
+    htmlelements,
+    node,
+    nodecollection,
+    htmlnode
+)
 
 def run_tests(*modules, **kwargs):
     """
@@ -11,7 +17,7 @@ def run_tests(*modules, **kwargs):
     import doctest
     import sys
 
-    verbosity = kwargs.get('verbosity', 2)
+    verbosity = kwargs.get('verbosity', 0)
     success = True
     for module in modules:
         suite = unittest.TestLoader().loadTestsFromModule(module)
@@ -21,4 +27,4 @@ def run_tests(*modules, **kwargs):
         success = success and result.wasSuccessful()
     sys.exit(0 if success else 1)
 
-run_tests(co, compiler, template, htmlelements, node, htmlnode)
+run_tests(co, compiler, template, htmlelements, node, nodecollection, htmlnode)

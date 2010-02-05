@@ -1,5 +1,6 @@
-from node import Node # fixme to absolute import
-from template import Template
+from quickui.compiler.node import Node
+from quickui.compiler.nodecollection import NodeCollection
+from quickui.compiler.template import Template
 
 __all__ = ['HtmlNode']
 
@@ -10,7 +11,7 @@ class HtmlNode(Node):
         self._html = kwargs.get('html')
         self._children = kwargs.get('children')
         if self._children is not None:
-            pass # make node collection!
+            self._children = NodeCollection(self._children)
 
     @property
     def html(self): return self._html
@@ -28,15 +29,15 @@ class HtmlNode(Node):
         """
         Return the JavaScript for the given HTML node.
         """
-        html = self.escape_javascript(self.html)
+        esc_html = self.escape_javascript(self.html)
         if self.id is None and self.children is None:
             # Simplest case; just quote the HTML and return it.
-            return Template.format('{html}', html=self.html)
+            return Template.format('{html}', html=esc_html)
         else:
             return Template.format(
                 '{variable_declaration}$({html}){children}[0]',
                 variable_declaration=self.emit_variable_declaration(),
-                html=self.html,
+                html=esc_html,
                 children=self.emit_children(indent_level)
             )
 
@@ -44,52 +45,37 @@ class HtmlNode(Node):
         return '' if self.children is None else Template.format(
             '.items(\n{children}{tabs})',
             children=self.children.emit_items(indent_level + 1),
-            tabs='\t' * indent_level
+            tabs=self.tabs(indent_level)
         )
 
-#         [TestFixture]
-#         public class Tests
-#         {
-#             [Test]
-#             public void Text()
-#             {
-#                 HtmlNode node = new HtmlNode("Hello");
-#                 Assert.AreEqual("\"Hello\"", node.EmitJavaScript());
-#             }
-# 
-#             [TestCase("<div>Hi</div>", Result = "\"<div>Hi</div>\"")]
-#             [TestCase("<div><h1/><p>Hello</p></div>", Result = "\"<div><h1/><p>Hello</p></div>\"")]
-#             public string Html(string source)
-#             {
-#                 HtmlNode node = new HtmlNode(source);
-#                 return node.EmitJavaScript();
-#             }
-# 
-#             [Test]
-#             public void HtmlWithId()
-#             {
-#                 HtmlNode node = new HtmlNode("<div id=\"foo\">Hi</div>", "foo");
-#                 Assert.AreEqual("this.foo = $(\"<div id=\\\"foo\\\">Hi</div>\")[0]", node.EmitJavaScript());
-#             }
-# 
-#             [Test]
-#             public void HtmlContainsHtmlWithId()
-#             {
-#                 // <div><h1/><p id="content">Hello</p></div>
-#                 HtmlNode node = new HtmlNode("<div />")
-#                 {
-#                     ChildNodes = new NodeCollection(new Node[] {
-#                         new HtmlNode("<h1 />"),
-#                         new HtmlNode("<p id=\"content\">Hello</p>", "content")
-#                     })
-#                 };
-#                 Assert.AreEqual(
-#                     "$(\"<div />\").items(\n" +
-#                     "\t\"<h1 />\",\n" +
-#                     "\tthis.content = $(\"<p id=\\\"content\\\">Hello</p>\")[0]\n" +
-#                     ")[0]",
-#                     node.EmitJavaScript());
-#             }
-#         }
-#     }
-# }
+import unittest
+class HtmlNodeTests(unittest.TestCase):
+    def test_text(self):
+        node = HtmlNode(html='Hello')
+        self.assertEquals('"Hello"', node.emit_javascript())
+
+    def test_markup(self):
+        def with_html(h):
+            return HtmlNode(html=h).emit_javascript()
+        self.assertEquals(
+            '"<div>Hi</div>"', with_html('<div>Hi</div>'))
+        self.assertEquals(
+            '"<div><h1/><p>Hello</p></div>"', with_html('<div><h1/><p>Hello</p></div>'))
+
+    def test_html_with_id(self):
+        node = HtmlNode(html='<div id="foo">Hi</div>', id='foo')
+        self.assertEquals(
+            'this.foo = $("<div id=\\"foo\\">Hi</div>")[0]',
+            node.emit_javascript())
+
+    def test_html_contains_html_with_id(self):
+        node = HtmlNode(
+            html='<div />',
+            children=(
+                HtmlNode(html='<h1 />'),
+                HtmlNode(html='<p id="content">Hello</p>', id='content')))
+        self.assertEquals("""\
+$("<div />").items(
+\t"<h1 />",
+\tthis.content = $("<p id=\\"content\\">Hello</p>")[0]
+)[0]""", node.emit_javascript())
