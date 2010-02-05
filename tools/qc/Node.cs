@@ -105,6 +105,12 @@ namespace qc
                         break;
 
                     default:
+                        // UNDONE: [pavel] This seems buggy. The following code runs for any character
+                        // lexicographically smaller than ' '.
+                        // It converts the character to string. Then it tries to convert this string into
+                        // integer by indicating that string represents a number in hex. But the string
+                        // is not anything like a hex string, it has one character with codepoint less than
+                        // codepoint of ' ' (codepoints of hex digits are greater than ' ').
                         if (c < ' ')
                         {
                             // Use hex representation.
