@@ -17,7 +17,7 @@ __all__ = ['HtmlElements']
 # UNDONE: utilities?
 @contextlib.contextmanager
 def resource_reader(name):
-    with open(os.path.join(os.path.dirname(__file__), name), 'rb') as resource_stream:
+    with open(os.path.join(os.path.dirname(__file__), 'resources', name), 'rb') as resource_stream:
         yield resource_stream
 
 # UNDONE: utilities?
