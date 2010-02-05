@@ -1,5 +1,6 @@
 from quickui.compiler.template import Template
 from quickui.compiler.htmlelements import HtmlElements
+from quickui.compiler.node import Node
 
 class CompilerException(Exception):
     """

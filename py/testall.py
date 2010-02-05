@@ -2,6 +2,7 @@ from quickui import co
 from quickui import compiler
 from quickui.compiler import template
 from quickui.compiler import htmlelements
+from quickui.compiler import node
 
 def run_tests(*modules, **kwargs):
     """
@@ -22,5 +23,4 @@ def run_tests(*modules, **kwargs):
         success = success and result.wasSuccessful()
     sys.exit(0 if success else 1)
 
-run_tests(co, compiler, template, htmlelements)
-
+run_tests(co, compiler, template, htmlelements, node)
