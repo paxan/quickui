@@ -1,0 +1,18 @@
+<Control name="DockPanel">
+
+<VerticalPanels id="verticalPanels">
+    <HorizontalPanels id="horizontalPanels" fill="true"/>
+</VerticalPanels>
+
+<script>
+$.extend(DockPanel.prototype, {
+    bottom: QuickUI.Element("verticalPanels").controlProperty("bottom"),
+    fill: QuickUI.Element("verticalPanels").controlProperty("fill"),
+    left: QuickUI.Element("horizontalPanels").controlProperty("left"),
+    content: QuickUI.Element("horizontalPanels").content(),
+    right: QuickUI.Element("horizontalPanels").controlProperty("right"),
+    top: QuickUI.Element("verticalPanels").controlProperty("top"),
+});
+</script>
+
+</Control>

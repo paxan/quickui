@@ -1,0 +1,11 @@
+<Control name="DockPanelAbout">
+<prototype>
+	<GalleryPage title="DockPanel" sourceFileExample="DockPanel/DockPanelDemo.qui" sourceFileControl="DockPanel/DockPanel.qui">
+		<summary>
+		</summary>
+		<demo>
+			<DockPanelDemo/>
+		</demo>
+	</GalleryPage>
+</prototype>
+</Control>

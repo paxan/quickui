@@ -2,6 +2,9 @@
 
 <content>
 	<NavigationLink id="linkIndex" href="/gallery/default.html">Index</NavigationLink>
+	<List id="listClass" itemClass="GalleryLink"/>
+	<!-->
+	<GalleryLink>DockPanel</GalleryLink>
 	<GalleryLink>IfBrowser</GalleryLink>
 	<GalleryLink>GalleryPage</GalleryLink>
     <GalleryLink>Gradient</GalleryLink>
@@ -13,12 +16,34 @@
 	<GalleryLink>SpriteButton</GalleryLink>
 	<GalleryLink>Tag</GalleryLink>
     <GalleryLink>TextBoxWithButton</GalleryLink>
+    -->
 </content>
 
 <style>
 #linkIndex {
 	margin-bottom: 15px;
-}	
+}
 </style>
+
+<script>
+$.extend(GalleryNavigationLinks.prototype, {
+    ready: function() {
+        QuickUI(this.listClass).items([
+            "DockPanel",
+            "IfBrowser",
+            "GalleryPage",
+            "Gradient",
+            "HintTextBox",
+            "List",
+            "SampleSpriteButton",
+            "SearchBox",
+            "Sprite",
+            "SpriteButton",
+            "Tag",
+            "TextBoxWithButton"
+        ]);
+    }
+});
+</script>
 
 </Control>
