@@ -3,20 +3,6 @@
 <content>
 	<NavigationLink id="linkIndex" href="/gallery/default.html">Index</NavigationLink>
 	<List id="listClass" itemClass="GalleryLink"/>
-	<!-->
-	<GalleryLink>DockPanel</GalleryLink>
-	<GalleryLink>IfBrowser</GalleryLink>
-	<GalleryLink>GalleryPage</GalleryLink>
-    <GalleryLink>Gradient</GalleryLink>
-	<GalleryLink>HintTextBox</GalleryLink>
-    <GalleryLink>List</GalleryLink>
-	<GalleryLink>SampleSpriteButton</GalleryLink>
-    <GalleryLink>SearchBox</GalleryLink>
-	<GalleryLink>Sprite</GalleryLink>
-	<GalleryLink>SpriteButton</GalleryLink>
-	<GalleryLink>Tag</GalleryLink>
-    <GalleryLink>TextBoxWithButton</GalleryLink>
-    -->
 </content>
 
 <style>
