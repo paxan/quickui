@@ -1,6 +1,7 @@
 <Control name="DockPanelDemo">
 
 <content>
+    <!--
     <DockPanel fill="true">
         <top>
             <b>A header</b>
@@ -15,6 +16,15 @@
             <span style="font-size: smaller;">A footer</span>
         </bottom>
     </DockPanel>
+    -->
+    <HorizontalPanels fill="true">
+        <left>
+            Navigation
+        </left>
+        <content>
+            <LoremIpsum/>
+        </content>
+    </HorizontalPanels>
 </content>
 
 <style>
